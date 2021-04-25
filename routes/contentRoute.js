@@ -1,11 +1,11 @@
 const express = require('express');
+var passport = require('passport');
 const contentRouter = express.Router();
-const contentController = require('../controllers/contentController');
 const fs = require('fs');
 const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-const bucket = process.env.AWS_BUCKET;
+const contentController = require('../controllers/contentController');
 
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 
 const multerS3Config = multerS3({
     s3: s3,
-    bucket: 'talktotucker-new-website',
+    bucket: process.env.AWS_BUCKET,
     metadata: function (req, file, cb) {
         cb(null, { fieldName: file.fieldname });
     },
@@ -49,7 +49,7 @@ const upload = multer({
 
 
 contentRouter.post('/add-content', upload.single('file'), contentController.addContent);
-contentRouter.get('/get-content', contentController.getContent);
-contentRouter.get('/get-filtered-content', contentController.getFilteredContent);
+contentRouter.get('/get-content', passport.authenticate('jwt', { session: false}), contentController.getContent);
+contentRouter.get('/get-filtered-content', passport.authenticate('jwt', { session: false}), contentController.getFilteredContent);
 
 module.exports = contentRouter;

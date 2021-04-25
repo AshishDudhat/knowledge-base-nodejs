@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const contentModel = require('../models/contentModel');
 const contentCtr = {};
 
-
+// Add content
 contentCtr.addContent = async (req, res) => {
     try {
         let obj = {
@@ -24,6 +24,7 @@ contentCtr.addContent = async (req, res) => {
     }
 }
 
+// get content
 contentCtr.getContent = async (req, res) => {
     try {
         let contents;
@@ -39,11 +40,11 @@ contentCtr.getContent = async (req, res) => {
     }
 }
 
+// Get content with filter
 contentCtr.getFilteredContent = async (req, res) => {
     try {
         let contents;
         if(req.query && req.query.category_id && req.query.text) {
-            // contents = await contentModel.find({category_id: req.query.category_id, user_id: req.query.user_id}).sort({_id: -1});
             contents = await contentModel.find({
                 $and: [
                     { category_id:  req.query.category_id },

@@ -6,7 +6,6 @@ const passport = require("passport");
 const cors = require('cors');
 const dbConfig = require('./db/db');
 const authRoute = require('./routes/authRoute');
-const userRoute = require('./routes/userRoute');
 const categoryRoute = require('./routes/categoryRoute');
 const contentRoute = require('./routes/contentRoute');
 
@@ -30,7 +29,6 @@ app.use(passport.initialize());
 require("./middlewares/jwt")(passport);
 
 app.use('/api/auth', authRoute)
-app.use('/api/user', userRoute)
 app.use('/api/category', categoryRoute)
 app.use('/api/content', contentRoute)
 

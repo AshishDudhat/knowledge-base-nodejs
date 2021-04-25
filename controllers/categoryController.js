@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const categoryModel = require('../models/categoryModel');
 const categoryCtr = {};
 
+// Add Category
 categoryCtr.addCategory = async (req, res) => {
     try {
         const {category_name, user_id} = req.body;
@@ -14,6 +15,7 @@ categoryCtr.addCategory = async (req, res) => {
     }
 }
 
+// Get All Category
 categoryCtr.getAllCategory = async (req, res) => {
     try {
         const {user_id} = req.query;
